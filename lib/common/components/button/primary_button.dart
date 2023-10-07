@@ -31,13 +31,12 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = ThemeService.getAppTextTheme(context);
-    final colorStyle = ThemeService.getAppColorTheme(context);
+
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         elevation: 0,
-        backgroundColor: backgroundColor ?? colorStyle.gray[700],
+        backgroundColor: backgroundColor ,
         shape: RoundedRectangleBorder(
           side: borderColor != null ? BorderSide(color: borderColor!) : BorderSide.none,
           // borderRadius: BorderRadius.circular(borderRadius??0),
@@ -54,7 +53,7 @@ class PrimaryButton extends StatelessWidget {
             padding: padding ?? const EdgeInsets.all(0),
             child: Text(
               text ?? '',
-              style: textStyle ?? style.button.copyWith(color: textColor),
+              style: textStyle ,
             ),
           ),
           if (suffixIcon != null) suffixIcon!,

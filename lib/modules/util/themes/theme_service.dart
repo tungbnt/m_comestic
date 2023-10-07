@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'app_color_theme.dart';
 import 'app_text_theme.dart';
 import 'app_theme.dart';
 
@@ -17,17 +16,9 @@ abstract class ThemeService {
     _themeModeApp = themeMode;
   }
 
-  static MyAppTheme getAppTheme(context) {
-    return Theme.of(context).extension<MyAppTheme>()!;
-  }
 
-  static AppTextTheme getAppTextTheme(context) {
-    return Theme.of(context).extension<AppTextTheme>()!;
-  }
 
-  static AppColorTheme getAppColorTheme(context) {
-    return Theme.of(context).extension<AppColorTheme>()!;
-  }
+
 }
 
 class HexColor extends Color {

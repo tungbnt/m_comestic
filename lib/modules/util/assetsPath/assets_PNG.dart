@@ -2,6 +2,8 @@
 
 class PathPNG{
 	static const String maintenancePNG = 'assets/png/maintenance.png';
+	static const String logo = 'assets/png/logo.png';
+	static const String splash = 'assets/png/splash.png';
 	static const String register_successPNG = 'assets/png/register_success.png';
 	static const String not_found_status_optimizedPNG = 'assets/png/not_found_status_optimized.png';
 	static const String no_voucherPNG = 'assets/png/no_voucher.png';

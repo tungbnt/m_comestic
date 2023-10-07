@@ -1,11 +1,18 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mcomestic/common/components/button/primary_button.dart';
-import 'package:mcomestic/common/components/form/phone_number_field.dart';
+import 'package:mcomestic/common/components/text_field_option.dart';
+import 'package:mcomestic/domain/service/dialog/dialog_service.dart';
+import 'package:mcomestic/domain/service/navigator/route_service.dart';
+import 'package:mcomestic/general/constants/app_colors.dart';
+import 'package:mcomestic/modules/dashboard/screen/dashboard_screens.dart';
 import 'package:mcomestic/modules/util/app_gap.dart';
+import 'package:mcomestic/modules/util/assetsPath/assets_PNG.dart';
+import 'package:mcomestic/modules/util/assetsPath/assets_SVG.dart';
 import 'package:mcomestic/modules/util/assetsPath/assets_icons.dart';
 import 'package:mcomestic/modules/util/key_const.dart';
 import 'package:mcomestic/modules/util/screen_size.dart';
@@ -14,7 +21,7 @@ import 'package:mcomestic/modules/util/utils/validate.dart';
 import '../../../domain/models/country_dialling_code.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -26,10 +33,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+    super.initState();
     selectedCodeData = CountryDiallingCode.vi;
     phoneController = TextEditingController();
-    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -43,84 +51,113 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         body: Container(
           // height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.symmetric(horizontal: width(16), vertical: height(46)),
-          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(height: height(57)),
-            const Row(
+          padding:
+              EdgeInsets.symmetric(horizontal: width(16), vertical: height(46)),
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // SvgPicture.asset(PathSVG.elise_appbar_logoSVG),
-                Spacer(),
-                // dropDownLang()
-              ],
-            ),
-            SizedBox(height: height(46)),
-            buildTitle(),
-            SizedBox(height: height(40)),
-            const Text(
-              KeyConst.number_phone,
-              // style: appTextTheme.caption2.copyWith(color: appColorTheme.gray[400]),
-            ),
-            PhoneNumberField(
-              validator: (value) {
-                return Validate.validatePhone(value!);
-              },
-              selectedCodeData: selectedCodeData,
-              controller: phoneController,
-              // formKey: controller.phoneFormKey,
-              textInputType: TextInputType.phone,
-            ),
-            SizedBox(height: height(40)),
-            SizedBox(
-              width: double.infinity,
-              height: height(44),
-              child: PrimaryButton(
-                isCenter: true,
-                onPressed: () async {
-                  // showLoading();
-                  FocusManager.instance.primaryFocus?.unfocus();
-                  // controller.resetValidate();
-                },
-                text: KeyConst.next.toUpperCase(),
-              ),
-            ),
-            SizedBox(height: height(24)),
-            lineWithText(),
-            SizedBox(height: height(24)),
-            button(),
-            const Spacer(),
-            buildTextBottom(),
-          ]),
+                SizedBox(height: height(27)),
+                Row(
+                  children: [
+                    Image.asset(
+                      PathPNG.logo,
+                      height: 65,
+                    ),
+                    AppGap.w10,
+                    SvgPicture.asset(
+                      PathSVG.appbar_logo,
+                      height: 25,
+                    ),
+                    // Spacer(),
+                    // dropDownLang()
+                    // dropDownLang()
+                  ],
+                ),
+                AppGap.h12,
+                buildTitle(),
+                AppGap.h32,
+                const Text(
+                  KeyConst.number_phone,
+                  style: TextStyle(
+                      color: AppColors.black, fontFamily: 'Quicksand'),
+                ),
+                AppGap.h10,
+                TextFieldOption(
+                  hintText: KeyConst.hint_email,
+                  controller: phoneController,
+                  onChanged: (value) {},
+                  validator: (value) => Validate.validatePhone(value!),
+                ),
+                AppGap.h40,
+                SizedBox(
+                  width: double.infinity,
+                  height: height(44),
+                  child: PrimaryButton(
+                    backgroundColor: AppColors.pinkSkyColor,
+                    isCenter: true,
+                    onPressed: () async {
+                      DialogService.showLoadingDefault();
+
+                      Timer(const Duration(seconds: 4), () {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        RouteService.pop();
+                        RouteService.routeGoOnePage(const DashboardScreens());
+                      });
+
+                      // controller.resetValidate();
+                    },
+                    text: KeyConst.next.toUpperCase(),
+                  ),
+                ),
+                AppGap.h24,
+                lineWithText(),
+                AppGap.h24,
+                button(),
+                const Spacer(),
+                buildTextBottom(),
+              ]),
         ),
       ),
     );
   }
+
   Widget buildTextBottom() {
     return Center(
       child: RichText(
         textAlign: TextAlign.center,
-        text: TextSpan( children: [
-          const TextSpan(text: "${KeyConst.by_login_with_your_acc}\n"),
+        text: TextSpan(children: [
+          const TextSpan(
+            text: "${KeyConst.by_login_with_your_acc}",
+            style: const TextStyle(
+                color: AppColors.black, fontFamily: 'Quicksand'),
+          ),
           TextSpan(
             text: "${KeyConst.condition_polyci} ",
-            // style: appTextTheme.chip.copyWith(fontWeight: FontWeight.w700, color: appColorTheme.secondaryText1),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {},
+            style: const TextStyle(
+                color: AppColors.errorColor, fontFamily: 'Quicksand'),
+            recognizer: TapGestureRecognizer()..onTap = () {},
           ),
           const TextSpan(
             text: KeyConst.and,
+            style: const TextStyle(
+                color: AppColors.black, fontFamily: 'Quicksand'),
           ),
           TextSpan(
             text: " ${KeyConst.security_polyci} ",
-            // style: appTextTheme.chip.copyWith(fontWeight: FontWeight.w700, color: appColorTheme.secondaryText1),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {},
+            style: const TextStyle(
+                color: AppColors.errorColor, fontFamily: 'Quicksand'),
+            recognizer: TapGestureRecognizer()..onTap = () {},
           ),
           const TextSpan(
             text: "${KeyConst.of} ",
+            style: const TextStyle(
+                color: AppColors.black, fontFamily: 'Quicksand'),
           ),
           const TextSpan(
             text: KeyConst.elise,
-            // style: appTextTheme.chip.copyWith(fontWeight: FontWeight.w700),
+            style: const TextStyle(
+                color: AppColors.black, fontFamily: 'Quicksand'),
           ),
         ]),
       ),
@@ -136,7 +173,9 @@ class _LoginScreenState extends State<LoginScreen> {
             width: double.infinity,
             height: height(44),
             child: buildButtonElement(
-                onPressed: (){},
+                onPressed: () {
+                  RouteService.routeGoOnePage(const DashboardScreens());
+                },
                 hasBorder: true,
                 iconPath: PathIcon.apple_iconSVG,
                 text: KeyConst.login_appleId.toUpperCase()),
@@ -144,18 +183,19 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         AppGap.h8,
         buildButtonElement(
-            onPressed: (){},
+            onPressed: () {},
             hasBorder: true,
             iconPath: PathIcon.facebook_iconSVG,
             text: KeyConst.login_facebook.toUpperCase()),
         AppGap.h8,
         buildButtonElement(
-            onPressed: (){},
+            onPressed: () {},
             hasBorder: true,
             iconPath: PathIcon.google_iconSVG,
             text: KeyConst.login_google.toUpperCase()),
         AppGap.h8,
-        buildButtonElement(text: KeyConst.skip_login.toUpperCase(), onPressed: (){}),
+        buildButtonElement(
+            text: KeyConst.skip_login.toUpperCase(), onPressed: () {}),
       ],
     );
   }
@@ -173,14 +213,17 @@ class _LoginScreenState extends State<LoginScreen> {
         isCenter: true,
         prefixIcon: Visibility(
             visible: iconPath != null,
-            child: Padding(padding: EdgeInsets.only(right: width(8)), child: SvgPicture.asset(iconPath ?? ""))),
-        // backgroundColor: appColorTheme.background2,
-        // borderColor: hasBorder != true ? null : appColorTheme.gray[700],
+            child: Padding(
+                padding: EdgeInsets.only(right: width(8)),
+                child: SvgPicture.asset(iconPath ?? ""))),
+        backgroundColor: AppColors.backgroundGreyColor,
+        borderColor: hasBorder != true ? null : AppColors.black,
         // hasBorder: hasBorder,
         onPressed: () {
           onPressed?.call();
         },
-        // textStyle: appTextTheme.bodyMediumBold.copyWith(color: appColorTheme.gray[700]),
+        textStyle:
+            const TextStyle(color: AppColors.black, fontFamily: 'Quicksand'),
         text: text,
       ),
     );
@@ -191,7 +234,11 @@ class _LoginScreenState extends State<LoginScreen> {
       children: [
         Text(
           KeyConst.login.toUpperCase(),
-          // style: appTextTheme.heading3Bold,
+          style: const TextStyle(
+            color: AppColors.black,
+            fontFamily: 'Quicksand',
+            fontSize: 20,
+          ),
         ),
         const Spacer(),
         InkWell(
@@ -212,21 +259,22 @@ class _LoginScreenState extends State<LoginScreen> {
       children: [
         Flexible(
             child: Container(
-              height: 1,
-              // color: appColorTheme.borderFocused,
-            )),
+          height: 1,
+          color: AppColors.black,
+        )),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: width(5)),
           child: Text(
             KeyConst.or.toUpperCase(),
-            // style: appTextTheme.bodyMedium.copyWith(color: appColorTheme.gray[500]),
+            style: const TextStyle(
+                color: AppColors.black, fontFamily: 'Quicksand'),
           ),
         ),
         Flexible(
             child: Container(
-              height: 1,
-              // color: appColorTheme.borderFocused,
-            ))
+          height: 1,
+          color: AppColors.black,
+        ))
       ],
     );
   }
@@ -234,26 +282,21 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget line() {
     return Flexible(
         child: Container(
-          height: 1,
-          // color: appColorTheme.borderFocused,
-        ));
+      height: 1,
+      color: AppColors.black,
+    ));
   }
 
-
-
-
-
-  AppBar appbar() {
-    return AppBar(
-      // primary: false,
-      leadingWidth: 0,
-      titleSpacing: width(16),
-      elevation: 0,
-      // backgroundColor: appColorTheme.background2,
-      // title: SvgPicture.asset(PathSVG.elise_appbar_logoSVG),
-      centerTitle: false,
-      // actions: [dropDownLang()],
-    );
-  }
+// AppBar appbar() {
+//   return AppBar(
+//     // primary: false,
+//     leadingWidth: 0,
+//     titleSpacing: width(16),
+//     elevation: 0,
+//     backgroundColor: AppColors.backgroundGreyColor,
+//     title: SvgPicture.asset(PathSVG.appbar_logo),
+//     centerTitle: false,
+//     // actions: [dropDownLang()],
+//   );
+// }
 }
-

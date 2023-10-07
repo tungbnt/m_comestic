@@ -2,7 +2,7 @@
 
 class PathSVG{
 	static const String category_searchSVG = 'assets/svg/category_search.svg';
-	static const String elise_appbar_logoSVG = 'assets/svg/elise_appbar_logo.svg';
+	static const String appbar_logo = 'assets/svg/appBar_logo.svg';
 	static const String nice_modelSVG = 'assets/svg/nice_model.svg';
 	static const String live_2SVG = 'assets/svg/live_2.svg';
 	static const String comunity_comming_soonSVG = 'assets/svg/comunity_comming_soon.svg';

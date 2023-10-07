@@ -13,6 +13,6 @@ Future<void> main() async {
   configureDependencies();
   //Default the main will play on development environment
   runApp(ScreenUtilInit(builder: (context, widget) {
-    return const PokeFitApp();
+    return const MComesticApp();
   }));
 }
