@@ -1,6 +1,7 @@
 // import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcomestic/general/constants/app_colors.dart';
 import 'package:mcomestic/modules/home/bloc/home_cubit.dart';
@@ -36,6 +37,10 @@ class _HomeViewState extends State<HomeView> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            // Status bar color
+            statusBarColor: Colors.white,
+          ),
           toolbarHeight: 0,
           backgroundColor: Colors.white,
         ),
@@ -53,7 +58,7 @@ class _HomeViewState extends State<HomeView> {
                 listWidget = state.listWidget!;
 
                 return DefaultTabController(
-                  length: cubit!.listCategories.length,
+                  length: 2,
                   child: Container(
                     color: Colors.white,
                     child: Column(
@@ -72,7 +77,7 @@ class _HomeViewState extends State<HomeView> {
                           labelColor: AppColors.black,
                           // labelStyle: textTheme.baseRegular.copyWith(fontSize: 15),
                           onTap: (index) {
-                            // controller.changeTabBar(index);
+                            cubit!.changeTabBar(index);
                           },
                           tabs: cubit!.listCategories
                               .map(

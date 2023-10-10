@@ -86,7 +86,7 @@ class _InitPageState extends State<InitPage> with WidgetsBindingObserver {
               return MaterialApp(
                 navigatorKey: AppManager.globalKeyRootMaterial,
                 debugShowCheckedModeBanner: false,
-                title: 'Poket Fitness',
+                title: 'M-Comestic',
                 theme: ThemeData(fontFamily: 'HevelticaNeue'),
                 locale:  AppLocaleEnum.JP.getLocale(),
                 themeMode: ThemeService.getTheme(),

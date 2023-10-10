@@ -81,11 +81,11 @@ class DialogService {
 
   static void showToast({String? msg}) {
     Fluttertoast.showToast(
-        msg: "This is Center Short Toast",
+        msg: msg!,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
+        backgroundColor: AppColors.primary,
         textColor: Colors.white,
         fontSize: 16.0
     );

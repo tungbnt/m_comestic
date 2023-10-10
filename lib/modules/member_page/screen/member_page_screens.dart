@@ -213,35 +213,6 @@ class _MemberPageState extends State<MemberPage> {
       divider,
     ];
 
-    // final footerSection = [
-    //   if (AppState.authenticated) ...[
-    //     GroupOptionItem(
-    //       titleLangKey: KeyConst.signOut,
-    //       titleColor: colorTheme.red.shade600,
-    //       icon: Icon(Remix.logout_circle_r_line, size: 20, color: colorTheme.red.shade600),
-    //       onTap: () {
-    //         controller.signOutPress();
-    //       },
-    //     ),
-    //     divider,
-    //   ],
-    //   ColoredBox(
-    //     color: backgroundColor,
-    //     child: Padding(
-    //       padding: const EdgeInsets.only(top: 42, bottom: 18),
-    //       child: Center(
-    //         child: Text(
-    //           "${KeyConst.appVersion.tr} ${ConstantsKey.appVersion}",
-    //           style: textTheme.baseRegular.copyWith(
-    //             fontSize: 11,
-    //             color: colorTheme.gray.shade500,
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // ];
-
     final List<Widget> children = [
       // membershipCardSection,
       ...orderSection,

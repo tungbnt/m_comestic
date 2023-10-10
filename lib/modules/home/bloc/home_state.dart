@@ -16,11 +16,13 @@ class HomeLoading extends HomeState {
 }
 
 class HomeSuccess extends HomeState {
-  const HomeSuccess({required this.listWidget, required this.listBannerTop,});
+  const HomeSuccess( {required this.listBST,required this.listWidget, required this.listBannerTop,});
 
   final List<Widget> listWidget;
   final List<Banners> listBannerTop;
+  final List<DataCollections> listBST ;
+
 
   @override
-  List<Object> get props => [listWidget,listBannerTop];
+  List<Object> get props => [listWidget,listBannerTop,listBST];
 }

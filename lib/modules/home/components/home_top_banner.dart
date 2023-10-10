@@ -22,7 +22,6 @@ class _HomeTopBannerState extends State<HomeTopBanner> {
     // TODO: implement initState
     super.initState();
     cubit = context.read<HomeCubit>();
-    // cubit!.init();
   }
 
   @override
@@ -30,7 +29,6 @@ class _HomeTopBannerState extends State<HomeTopBanner> {
     return BlocBuilder<HomeCubit, HomeState>(
         buildWhen: (context,state)=> state is HomeSuccess,
         builder: (content, state) {
-      print('data ${cubit!.listBannerTop.isNotEmpty}');
       if(state is HomeSuccess){
         cubit!.listBannerTop = state.listBannerTop!;
         return Padding(
